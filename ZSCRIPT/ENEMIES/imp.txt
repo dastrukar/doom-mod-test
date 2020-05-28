@@ -1,0 +1,2 @@
+class imp : DoomImp { Default { Speed 16; }
+}

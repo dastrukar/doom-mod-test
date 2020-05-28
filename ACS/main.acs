@@ -1,0 +1,6 @@
+#library "main"
+#include "zcommon.acs"
+
+script "p" (int x) {
+	print(d:x);
+}

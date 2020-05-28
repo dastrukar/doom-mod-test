@@ -1,0 +1,93 @@
+class smg : AWeapon {
+Default {
+  Weapon.AmmoType1 "smgloads";
+  Weapon.AmmoType2 "smgrounds";
+  AWeapon.Spread 2;
+  +WEAPON.NOAUTOFIRE;
+  }
+  
+	States {
+		Select:
+			RFLG A 1 A_Raise(10);
+			loop;
+		Deselect:
+			RFLG A 1 A_Lower(10);
+			loop;
+		
+		Ready:
+			RFLG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWUSER1);
+			loop;
+		
+		Fire:
+			RFLG A 0 A_JumpIfInventory("smgloads", 1, "SFire");
+			goto Ready;
+		SFire:
+			RFLG A 0 A_TakeInventory("smgloads", 1);
+			RFLG A 0 A_Quake(3, 3, 0, 32, "");
+			RFLG A 0 A_PlaySound("smgf", CHAN_WEAPON, 0.25);
+			RFLG A 0 doAcc(0.4);
+			RFLG A 0 A_FireBullets(calcAcc(), 0, -1, 7);
+			RFLG A 0 A_SetPitch(pitch-1.5); //next time fire the bullet before changing pitch as that can affect the bullet travel
+			RFLG B 1 Offset(0, 42) A_GunFlash();
+			RFLG B 1 Offset(0, 45) A_SetPitch(pitch+0.75);
+			RFLG B 1 Offset(0, 43) A_SetPitch(pitch+0.75);
+			RFLG A 0 A_TakeInventory("smgloads", 1);
+			RFLG A 0 A_Quake(3, 3, 0, 32, "");
+			RFLG A 0 A_PlaySound("smgf", CHAN_WEAPON, 0.25);
+			RFLG A 0 doAcc(0.4);
+			RFLG A 0 A_FireBullets(calcAcc(), 0, -1, 7);
+			RFLG A 0 A_SetPitch(pitch-1.5);
+			RFLG B 1 Offset(0, 42) A_GunFlash();
+			RFLG B 1 Offset(0, 45) A_SetPitch(pitch+0.75);
+			RFLG B 1 Offset(0, 43) A_SetPitch(pitch+0.75);
+			RFLG A 0 A_TakeInventory("smgloads", 1);
+			RFLG A 0 A_Quake(3, 3, 0, 32, "");
+			RFLG A 0 A_PlaySound("smgf", CHAN_WEAPON, 0.25);
+			RFLG A 0 doAcc(0.4);
+			RFLG A 0 A_FireBullets(calcAcc(), 0, -1, 7);
+			RFLG A 0 A_SetPitch(pitch-1.5);
+			RFLG B 1 Offset(0, 42) A_GunFlash();
+			RFLG B 1 Offset(0, 45) A_SetPitch(pitch+0.75);
+			RFLG B 1 Offset(0, 43) A_SetPitch(pitch+0.75);
+			goto Ready;
+		
+		User1:
+		Eject:
+			RFLG A 0 A_JumpIfInventory("ejecttoken", 1, "CEject");
+			RFLG A 0 A_PlaySound("smgro", CHAN_WEAPON);
+			RFLG A 0 A_SetInventory("smgloads", 0);
+			RFLG A 0 A_GiveInventory("ejecttoken");
+			goto Ready;
+		CEject:
+			RFLG A 0 A_Log("Gun is already unloaded.");
+			goto Ready;
+		
+		Reload:
+			RFLG A 0 A_JumpIfInventory("ejecttoken", 1, "CReload");
+			RFLG A 0 A_Log("Gun is still loaded.");
+			goto Ready;
+		CReload:
+			RFLG A 0 A_Log("Gun is loading...");
+			RFLG A 0 A_JumpIfInventory("smgrounds", 1, "SReload");
+			goto Ready;
+		SReload:
+			RFLG A 0 A_TakeInventory("ejecttoken", 1);
+			RFLG A 0 A_TakeInventory("smgrounds", 1);
+			RFLG A 0 A_GiveInventory("smgloads", 1);
+			RFLG A 0 A_JumpIfInventory("smgloads", 30, "EReload");
+			RFLG A 0 A_JumpIfInventory("smgrounds", 1, "SReload");
+			loop;
+		EReload:
+			RFLG A 0 A_PlaySound("smgri", CHAN_WEAPON);
+			goto Ready;
+		
+		Flash:
+			RFLF A 2;
+			goto LightDone;
+	}
+}
+
+class smgloads : Ammo { Default { Inventory.MaxAmount 30; } }
+class smgrounds : Ammo { Default { Inventory.MaxAmount 120; } }
+
+//inaccuracy system???j

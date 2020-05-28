@@ -1,0 +1,56 @@
+version 4.0.0
+
+//shield
+#include "ZSCRIPT/armor.txt"
+
+//guns
+#include "ZSCRIPT/weapon.txt"
+#include "ZSCRIPT/WEAPONS/hg.txt" //magnum
+#include "ZSCRIPT/WEAPONS/smg.txt" //smg
+#include "ZSCRIPT/heat.txt"
+
+//mobs
+#include "ZSCRIPT/ENEMIES/zman.txt"
+#include "ZSCRIPT/ENEMIES/shotguy.txt"
+#include "ZSCRIPT/ENEMIES/pinky.txt"
+#include "ZSCRIPT/ENEMIES/imp.txt"
+
+//mobspawners
+#include "ZSCRIPT/ENEMIES/spawners.txt"
+
+//otherthings
+#include "ZSCRIPT/crosshair.txt"
+
+class BadPlayer : DoomPlayer replaces DoomPlayer {
+Default {
+  Player.StartItem "smg";
+  Player.StartItem "hg";
+  Player.StartItem "MagnumRounds", 50;
+  Player.StartItem "smgloads", 30;
+  Player.StartItem "smgrounds", 120;
+  Player.WeaponSlot 1, "hg", "smg";
+  }
+  
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle) {
+		GiveInventory("shieldcooldown", 1);
+		
+		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+	}
+	
+	override void Tick() {
+		Super.Tick();
+		
+		if (!CheckInventory("shieldcooldown", 1)) {
+			GiveInventory("shieldarmor", 1);
+		}
+		
+		TakeInventory("acctoken", 1);
+	}
+  
+}
+
+class shieldcooldown : Powerup {
+Default {
+  Powerup.Duration -5;
+  }
+}

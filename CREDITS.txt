@@ -1,0 +1,22 @@
+###############
+/Sound Effects/
+###############
+--------------
+Weapon sounds
+------------------------------
+=
+Pistol sounds taken from F.E.A.R by Monolith Productions
+Link: https://store.steampowered.com/app/21090/FEAR/
+=
+P226 by MagmaCow (SMG sounds)
+Link: https://gamebanana.com/sounds/38915
+=
+#########
+/Sprites/
+#########
+---------------
+Weapon sprites
+------------------------------
+=
+SMG sprites taken from Doom Alpha (slightly modified by me)
+=

@@ -1,0 +1,16 @@
+pfire1 pfire1
+pfire2 pfire2
+pfire3 pfire3
+
+$random pfire { pfire1 pfire2 pfire3 }
+
+smgf1 smgf1
+smgf2 smgf2
+smgf3 smgf3
+
+$random smgf { smgf1 smgf2 smgf3 }
+
+smgri smgri
+smgro smgro
+smgb1 smgb1
+smgb2 smgb2

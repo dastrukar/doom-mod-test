@@ -1,0 +1,7 @@
+//might add variants
+
+class zman : ZombieMan { Default { Speed 12; }
+}
+
+class plasmaman : zman {
+}

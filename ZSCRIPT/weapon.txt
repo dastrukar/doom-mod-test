@@ -1,0 +1,45 @@
+class AWeapon : Weapon {
+
+double spread;
+property Spread : spread;
+
+action double calcAcc() {
+	double Accuracy;
+	double inacc;
+	
+	inacc = CountInv("acctoken") / 36; //convert back to seconds?
+	
+	if (!inacc == 0) {
+		Accuracy = invoker.spread * inacc; //pro tip, dont use pointers unless you really need to
+	} else {
+		Accuracy = invoker.spread * 0.1;
+	}
+	
+	
+	//ACS_NamedExecute("p", 0, Accuracy);
+	return Accuracy;
+}
+
+action void doAcc(double time, bool ticmode = false) {
+	// 1 second = 35.71 tic? or 36
+	int acctime; //how long will it take for inaccuracy to go away?
+	
+	if (!ticmode) {
+		acctime = time * 36;
+	} else {
+		acctime = time;
+	}
+	
+	ACS_NamedExecute("p", 0, acctime);
+	
+	A_GiveInventory("acctoken", acctime);
+}
+
+Default {
+  AWeapon.Spread 0;
+  Decal "BulletChip";
+  }
+}
+
+class acctoken : Inventory { Default { Inventory.MaxAmount 179; } } //highest inaccuracy is 5 seconds sort of
+class ejecttoken : Inventory { Default { Inventory.MaxAmount 1; } } //checks if weapon mag has been ejected

@@ -1,0 +1,5 @@
+class heat : Ammo {
+Default {
+  Inventory.MaxAmount 1000;
+  }
+}

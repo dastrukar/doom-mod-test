@@ -1,0 +1,9 @@
+//define
+
+class shieldarmor : BasicArmorBonus {
+Default {
+	Armor.MaxSaveAmount 50;
+	Armor.SavePercent 100;
+	Armor.SaveAmount 1;
+  }
+}

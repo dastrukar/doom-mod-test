@@ -1,0 +1,41 @@
+
+class crossthing : EventHandler {
+	
+	bool loaded;
+	TextureID xbar;
+	double inacc; //inaccuracy?
+	
+	void getInfo() {
+		if (players[consoleplayer].ReadyWeapon != null) {
+			inacc = 5;
+		}
+		
+		if (!loaded) {
+			inacc = 10;
+			xbar = TexMan.CheckForTexture("xbar", TexMan.Type_Any);
+			loaded = true;
+		}
+	}
+	
+	override void WorldTick() {
+		getInfo();
+		super.WorldTick();
+	}
+	
+	override void RenderOverlay(RenderEvent e) {
+		int swidth = Screen.getWidth();
+		int sheight = Screen.getHeight();
+		
+		//center coordinates
+		double x = swidth * 0.5;
+		double y = sheight * 0.5;
+		//crosshair coordinates???
+		double xleft = x - inacc;
+		double xright = x + inacc;
+		
+		if (loaded) {
+			Screen.DrawTexture(xbar, false, xleft, y, DTA_KeepRatio, true, DTA_VirtualWidth, swidth, DTA_VirtualHeight, sheight); //xleft
+			Screen.DrawTexture(xbar, false, xright, y, DTA_KeepRatio, true, DTA_VirtualWidth, swidth, DTA_VirtualHeight, sheight);
+		} //, DTA_KeepRatio, true , DTA_VirtualWidth, swidth, DTA_VirtualHeight, sheight
+	}
+}

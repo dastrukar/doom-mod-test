@@ -1,0 +1,4 @@
+GameInfo {
+	playerclasses = "BadPlayer"
+	//AddEventHandlers = "crossthing" 
+}
